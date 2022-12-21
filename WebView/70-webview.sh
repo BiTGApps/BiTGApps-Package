@@ -17,6 +17,7 @@ fi
 list_files() {
 cat <<EOF
 app/WebView/WebView.apk
+app/Library/Library.apk
 EOF
 }
 

@@ -9,6 +9,7 @@ mkdir -p "zip/sys"
 
 # Packages
 cp -f WebView/WebView.tar.xz zip/sys
+cp -f WebView/Library.tar.xz zip/sys
 
 # Scripts
 cp -f update-binary.sh META-INF/com/google/android/update-binary

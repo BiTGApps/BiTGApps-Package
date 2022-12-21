@@ -444,6 +444,7 @@ is_uninstaller() {
     ui_print "- Uninstall WebView Google"
     rm -rf $SYSTEM_ADDOND/70-webview.sh
     rm -rf $SYSTEM_APP/WebView
+    rm -rf $SYSTEM_APP/Library
     # End installation
     on_installed
   fi
@@ -452,8 +453,9 @@ is_uninstaller() {
 sdk_v25_install() {
   # Remove WebView Google
   rm -rf $SYSTEM_APP/WebView
+  rm -rf $SYSTEM_APP/Library
   ui_print "- Installing WebView Google"
-  ZIP="zip/sys/WebView.tar.xz"
+  ZIP="zip/sys/WebView.tar.xz zip/sys/Library.tar.xz"
   if [ "$BOOTMODE" = "false" ]; then
     for f in $ZIP; do unzip -oq "$ZIPFILE" "$f" -d "$TMP"; done
   fi
@@ -462,6 +464,7 @@ sdk_v25_install() {
     for f in $ZIP; do $(unzip -oq "$ZIPFILE" "$f" -d "$TMP"); done
   fi
   tar -xf $ZIP_FILE/sys/WebView.tar.xz -C $TMP_SYS
+  tar -xf $ZIP_FILE/sys/Library.tar.xz -C $TMP_SYS
   pkg_TMPSys
   # Purge runtime permissions
   rm -rf $(find /data -type f -iname "runtime-permissions.xml")
