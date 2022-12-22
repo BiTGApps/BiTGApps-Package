@@ -455,6 +455,9 @@ sdk_v25_install() {
   P="/product /system_ext"
   # Remove Chrome Google
   for f in $SYSTEM $SYSTEM/product $SYSTEM/system_ext $P; do
+    find $f -type d -name '*Browser*' -exec rm -rf {} +
+    find $f -type d -name '*Jelly*' -exec rm -rf {} +
+    find $f -type d -name '*Via*' -exec rm -rf {} +
     find $f -type d -name '*Chrome*' -exec rm -rf {} +
     find $f -type d -name '*Library*' -exec rm -rf {} +
   done
