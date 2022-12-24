@@ -507,13 +507,23 @@ pre_install() {
   mount_apex
 }
 
+df_reclaimed() {
+  PKG="$(find /system -type d -iname '*Chrome*')"
+  RES="$(find /system -type d -iname '*Library*')"
+  PACKAGE="$(du -sxk "$PKG" | cut -f1)"
+  RESERVE="$(du -sxk "$RES" | cut -f1)"
+  test -z "$PACKAGE" && PACKAGE='0'
+  test -z "$RESERVE" && RESERVE='0'
+  CLAIMED="$(($PACKAGE+$RESERVE))"
+}
+
 df_partition() {
   # Get the available space left on the device
   size=`df -k /system | tail -n 1 | tr -s ' ' | cut -d' ' -f4`
   # Disk space in human readable format (k=1024)
   ds_hr=`df -h /system | tail -n 1 | tr -s ' ' | cut -d' ' -f4`
   # Common target
-  CAPACITY="$CAPACITY"
+  CAPACITY="$(($CAPACITY-$CLAIMED))"
   # Print partition type
   partition="System"
 }
@@ -531,6 +541,7 @@ df_checker() {
 }
 
 post_install() {
+  df_reclaimed
   df_partition
   df_checker
   build_defaults
